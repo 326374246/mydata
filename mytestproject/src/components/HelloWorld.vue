@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <button @click = "func()">跳转</button>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -89,6 +90,11 @@ export default {
   data () {
     return {
       msg: '一个VueProject'
+    }
+  },
+  methods:{
+    func (){
+      this.$router.push({path: '/menutest1'});
     }
   }
 }
