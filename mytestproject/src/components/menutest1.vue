@@ -42,22 +42,50 @@
     <el-menu-item index="3" disabled>消息中心</el-menu-item>
     <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
   </el-menu>
+
+    <div>
+      <el-row>
+        <el-button v-text="username" @click="handleClick"/>
+      </el-row>
+    </div>
+
   </div>
 </template>
 
 <script>
+  import store from '@/store/store.js'
     export default {
       data() {
         return {
+          username:store.state.app.username,
           activeIndex: '1',
-          activeIndex2: '1'
+          activeIndex2: '1',
+          astr:null
         };
       },
       methods: {
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
+        },
+        handleClick() {
+          // console.info(store)
+          store.commit('setUserName', this.astr.astr)
+          this.username = store.state.app.username
         }
-      }
+      },
+      mounted: function () {
+        // GET /someUrl
+        this.$http.post(process.env.BASE_API+'/cost/settlement/test',{astr:"aaa"}).then(response => {
+          // store.dispatch('commitUserList',response.data);
+          this.astr = JSON.parse(response.data.data)
+          console.log(this.astr.astr)
+          // get body data
+          // this.someData = response.body;
+
+        }, response => {
+          console.log("error");
+        });
+      },
     }
 </script>
 
