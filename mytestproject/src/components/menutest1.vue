@@ -47,30 +47,47 @@
       <el-row>
         <el-button v-text="username" @click="handleClick"/>
       </el-row>
+      <el-row>
+        <el-button v-text="countvalue" @click="handleClick2"/>
+      </el-row>
+      <!--<el-row>-->
+        <!--<button @click="incrementvalue">+1</button>    &lt;!&ndash; 事件处理函数变为add &ndash;&gt;-->
+      <!--</el-row>-->
     </div>
 
   </div>
 </template>
 
 <script>
-  import store from '@/store/store.js'
+  // import store from '@/store/store.js'
+  import {mapActions} from "vuex";
     export default {
       data() {
         return {
-          username:store.state.app.username,
+          username:this.$store.getters.getUsername,
+          countvalue:this.$store.getters.getCount,
           activeIndex: '1',
           activeIndex2: '1',
           astr:null
         };
       },
       methods: {
+        // ...mapActions({
+        //   incrementvalue: 'incrementvalue'
+        // }),
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
         },
         handleClick() {
-          // console.info(store)
-          store.commit('setUserName', this.astr.astr)
-          this.username = store.state.app.username
+          // store.commit('setUserName', this.astr.astr)
+          // console.info(this.$store)
+          // debugger
+          this.$store.dispatch('setName',this.astr.astr);
+          this.username = this.$store.getters.getUsername
+        },
+        handleClick2() {
+          this.$store.dispatch('incrementvalue');
+          this.countvalue = this.$store.getters.getCount
         }
       },
       mounted: function () {
